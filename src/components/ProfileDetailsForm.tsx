@@ -39,12 +39,12 @@ export default function ProfileDetailsForm({ user }: ProfileDetailsFormProps) {
   return (
     <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-5">
       <div>
-        <label className="block text-sm text-gray-600">Title</label>
+        <label className="block text-sm text-gray-800 md:text-gray-600">Title</label>
         <select 
           name="title" 
           value={formData.title} 
           onChange={handleChange} 
-          className="w-full border rounded-lg p-2.5 mt-1"
+          className="w-full border rounded-lg p-2.5 mt-1 text-gray-900"
         >
           <option value="">Select Title</option>
           <option value="Mr">Mr</option>
@@ -56,63 +56,63 @@ export default function ProfileDetailsForm({ user }: ProfileDetailsFormProps) {
       </div>
 
       <div>
-        <label className="block text-sm text-gray-600">Last Name</label>
+        <label className="block text-sm text-gray-800 md:text-gray-600">Last Name</label>
         <input 
           name="lastName" 
           value={formData.lastName} 
           onChange={handleChange} 
-          className="w-full border rounded-lg p-2.5 mt-1" 
+          className="w-full border rounded-lg p-2.5 mt-1 text-gray-900" 
         />
       </div>
 
       <div>
-        <label className="block text-sm text-gray-600">First Name</label>
+        <label className="block text-sm text-gray-800 md:text-gray-600">First Name</label>
         <input 
           name="firstName" 
           value={formData.firstName} 
           onChange={handleChange} 
-          className="w-full border rounded-lg p-2.5 mt-1" 
+          className="w-full border rounded-lg p-2.5 mt-1 text-gray-900" 
         />
       </div>
 
       <div>
-        <label className="block text-sm text-gray-600">Middle Name</label>
+        <label className="block text-sm text-gray-800 md:text-gray-600">Middle Name</label>
         <input 
           name="middleName" 
           value={formData.middleName} 
           onChange={handleChange} 
-          className="w-full border rounded-lg p-2.5 mt-1" 
+          className="w-full border rounded-lg p-2.5 mt-1 text-gray-900" 
         />
       </div>
 
       <div>
-        <label className="block text-sm text-gray-600">Email Address</label>
+        <label className="block text-sm text-gray-800 md:text-gray-600">Email Address</label>
         <input 
           type="email" 
           name="email" 
           value={formData.email} 
           disabled 
-          className="w-full border rounded-lg p-2.5 mt-1 bg-gray-100" 
+          className="w-full border rounded-lg p-2.5 mt-1 bg-gray-100 text-gray-900" 
         />
       </div>
 
       <div>
-        <label className="block text-sm text-gray-600">Phone Number</label>
+        <label className="block text-sm text-gray-800 md:text-gray-600">Phone Number</label>
         <input 
           name="phone" 
           value={formData.phone} 
           onChange={handleChange} 
-          className="w-full border rounded-lg p-2.5 mt-1" 
+          className="w-full border rounded-lg p-2.5 mt-1 text-gray-900" 
         />
       </div>
 
       <div>
-        <label className="block text-sm text-gray-600">Gender</label>
+        <label className="block text-sm text-gray-800 md:text-gray-600">Gender</label>
         <select 
           name="gender" 
           value={formData.gender} 
           onChange={handleChange} 
-          className="w-full border rounded-lg p-2.5 mt-1"
+          className="w-full border rounded-lg p-2.5 mt-1 text-gray-900"
         >
           <option value="">Select</option>
           <option value="Male">Male</option>
@@ -123,65 +123,65 @@ export default function ProfileDetailsForm({ user }: ProfileDetailsFormProps) {
       </div>
 
       <div>
-        <label className="block text-sm text-gray-600">Date of Birth</label>
+        <label className="block text-sm text-gray-800 md:text-gray-600">Date of Birth</label>
         <input 
           type="date" 
           name="dob" 
           value={formData.dob} 
           onChange={handleChange} 
-          className="w-full border rounded-lg p-2.5 mt-1" 
+          className="w-full border rounded-lg p-2.5 mt-1 text-gray-900" 
         />
       </div>
 
       <div>
-        <label className="block text-sm text-gray-600">Nationality</label>
+        <label className="block text-sm text-gray-800 md:text-gray-600">Nationality</label>
         <input 
           name="nationality" 
           value={formData.nationality} 
           onChange={handleChange} 
-          className="w-full border rounded-lg p-2.5 mt-1" 
+          className="w-full border rounded-lg p-2.5 mt-1 text-gray-900" 
         />
       </div>
 
       <div>
-        <label className="block text-sm text-gray-600">Passport Issuing Country</label>
+        <label className="block text-sm text-gray-800 md:text-gray-600">Passport Issuing Country</label>
         <input 
           name="passportCountry" 
           value={formData.passportCountry} 
           onChange={handleChange} 
-          className="w-full border rounded-lg p-2.5 mt-1" 
+          className="w-full border rounded-lg p-2.5 mt-1 text-gray-900" 
         />
       </div>
 
       <div>
-        <label className="block text-sm text-gray-600">Passport Number</label>
+        <label className="block text-sm text-gray-800 md:text-gray-600">Passport Number</label>
         <input 
           name="passportNumber" 
           value={formData.passportNumber} 
           onChange={handleChange} 
-          className="w-full border rounded-lg p-2.5 mt-1" 
+          className="w-full border rounded-lg p-2.5 mt-1 text-gray-900" 
         />
       </div>
 
       <div>
-        <label className="block text-sm text-gray-600">Passport Issue Date</label>
+        <label className="block text-sm text-gray-800 md:text-gray-600">Passport Issue Date</label>
         <input 
           type="date" 
           name="passportIssueDate" 
           value={formData.passportIssueDate} 
           onChange={handleChange} 
-          className="w-full border rounded-lg p-2.5 mt-1" 
+          className="w-full border rounded-lg p-2.5 mt-1 text-gray-900" 
         />
       </div>
 
       <div>
-        <label className="block text-sm text-gray-600">Passport Expiry Date</label>
+        <label className="block text-sm text-gray-800 md:text-gray-600">Passport Expiry Date</label>
         <input 
           type="date" 
           name="passportExpiryDate" 
           value={formData.passportExpiryDate} 
           onChange={handleChange} 
-          className="w-full border rounded-lg p-2.5 mt-1" 
+          className="w-full border rounded-lg p-2.5 mt-1 text-gray-900" 
         />
       </div>
 

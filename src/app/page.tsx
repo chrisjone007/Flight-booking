@@ -382,7 +382,7 @@ const visibleDestinations = destinations.slice(currentDestinationsIndex, current
                 <select
                   value={searchParams.tripType}
                   onChange={(e) => updateSearchParams('tripType', e.target.value)}
-                  className="w-full p-2 sm:p-3 bg-white/10 backdrop-blur-sm border border-white/50 rounded text-white text-sm outline-none"
+                  className="w-full p-2 sm:p-3 bg-white/10 backdrop-blur-sm border border-white/50 rounded text-black text-sm outline-none"
                 >
                   <option value="round-trip">Round Trip</option>
                   <option value="one-way">One Way</option>
@@ -395,7 +395,7 @@ const visibleDestinations = destinations.slice(currentDestinationsIndex, current
                 <select
                   value={searchParams.cabinClass}
                   onChange={(e) => updateSearchParams('cabinClass', e.target.value)}
-                    className="w-full p-2 sm:p-3 bg-white/10 backdrop-blur-sm border border-white/50 rounded text-white text-sm"
+                    className="w-full p-2 sm:p-3 bg-white/10 backdrop-blur-sm border border-white/50 rounded text-black text-sm"
                   >
                   <option value="economy">Economy</option>
                   <option value="premium-economy">Premium Economy</option>
