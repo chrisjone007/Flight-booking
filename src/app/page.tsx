@@ -349,7 +349,7 @@ const visibleDestinations = destinations.slice(currentDestinationsIndex, current
   return (
     <>
       {/* Hero Section - Updated for full width */}
-      <section className="relative h-screen flex items-center justify-center w-full">
+      <section className="relative h-screen flex items-center justify-center w-full pt-20">
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{
