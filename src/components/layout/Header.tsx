@@ -4,7 +4,9 @@ import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
-import AuthModal from "@/components/AuthModal"; // ✅ Import your AuthModal
+import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion"; // ✅ animation library
+import AuthModal from "@/components/AuthModal";
 
 export default function Header() {
   const { user, logout, isAuthenticated } = useAuth();
@@ -12,13 +14,13 @@ export default function Header() {
 
   const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false); // ✅ controls modal visibility
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authTab, setAuthTab] = useState<"signin" | "register">("signin");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const currencyRef = useRef<HTMLDivElement>(null);
   const languageRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (currencyRef.current && !currencyRef.current.contains(event.target as Node)) {
@@ -28,12 +30,10 @@ export default function Header() {
         setShowLanguageDropdown(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Redirect to profile page after login/register
   useEffect(() => {
     if (isAuthenticated && user) {
       setIsAuthModalOpen(false);
@@ -58,38 +58,27 @@ export default function Header() {
 
   return (
     <>
-      <header className="bg-white shadow-sm border-b w-full">
-        <div className="w-full px-3 sm:px-4 lg:px-6">
+      <header className="bg-white shadow-sm border-b w-full z-50 relative">
+        <div className="w-full px-4 lg:px-6">
           <div className="flex justify-between items-center h-14 sm:h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center">
               <span className="text-xl sm:text-2xl font-bold text-blue-600">Ezzifly</span>
             </Link>
 
-            {/* Navigation */}
-            <nav className="flex items-center space-x-2 sm:space-x-3 lg:space-x-4">
-              {/* Help Icon */}
-              <button className="p-1.5 sm:p-2 text-gray-600 hover:text-blue-600 transition duration-300 hidden xs:block">
-                <svg
-                  className="w-4 h-4 sm:w-5 sm:h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3
-                    0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994
-                    1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </button>
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="lg:hidden p-2 text-gray-700 hover:text-blue-600 transition"
+            >
+              {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
 
-              {/* Nigeria Flag */}
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-4">
+              {/* Flag */}
               <div className="flex items-center">
-                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full overflow-hidden border border-gray-200 flex">
+                <div className="w-6 h-6 rounded-full overflow-hidden border border-gray-200 flex">
                   <div className="w-1/3 bg-green-600"></div>
                   <div className="w-1/3 bg-white"></div>
                   <div className="w-1/3 bg-green-600"></div>
@@ -100,11 +89,11 @@ export default function Header() {
               <div className="relative" ref={languageRef}>
                 <button
                   onClick={toggleLanguageDropdown}
-                  className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 transition duration-300 p-1.5 sm:p-2"
+                  className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 transition p-2"
                 >
-                  <span className="text-xs sm:text-sm font-medium">EN</span>
+                  <span className="text-sm font-medium">EN</span>
                   <svg
-                    className="w-3 h-3 sm:w-4 sm:h-4"
+                    className="w-4 h-4"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -114,13 +103,13 @@ export default function Header() {
                 </button>
 
                 {showLanguageDropdown && (
-                  <div className="absolute right-0 mt-2 w-28 sm:w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                  <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
                     <div className="py-1">
                       {["English (EN)", "French (FR)", "Spanish (ES)"].map((lang) => (
                         <button
                           key={lang}
                           onClick={() => setShowLanguageDropdown(false)}
-                          className="block w-full text-left px-3 sm:px-4 py-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-100"
+                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         >
                           {lang}
                         </button>
@@ -134,11 +123,11 @@ export default function Header() {
               <div className="relative" ref={currencyRef}>
                 <button
                   onClick={toggleCurrencyDropdown}
-                  className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 transition duration-300 p-1.5 sm:p-2"
+                  className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 transition p-2"
                 >
-                  <span className="text-xs sm:text-sm font-medium">NGN</span>
+                  <span className="text-sm font-medium">NGN</span>
                   <svg
-                    className="w-3 h-3 sm:w-4 sm:h-4"
+                    className="w-4 h-4"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -148,13 +137,13 @@ export default function Header() {
                 </button>
 
                 {showCurrencyDropdown && (
-                  <div className="absolute right-0 mt-2 w-28 sm:w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                  <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
                     <div className="py-1">
                       {["NGN", "USD", "EUR"].map((cur) => (
                         <button
                           key={cur}
                           onClick={() => setShowCurrencyDropdown(false)}
-                          className="block w-full text-left px-3 sm:px-4 py-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-100"
+                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         >
                           {cur}
                         </button>
@@ -164,21 +153,15 @@ export default function Header() {
                 )}
               </div>
 
-              {/* Divider */}
-              <div className="h-4 sm:h-6 w-px bg-gray-300 hidden xs:block"></div>
-
-              {/* Authentication */}
+              {/* Auth Buttons */}
               {user ? (
-                <div className="flex items-center space-x-2 sm:space-x-3">
-                  <Link
-                    href="/profile"
-                    className="text-gray-700 hover:text-blue-600 text-xs sm:text-sm"
-                  >
+                <div className="flex items-center space-x-3">
+                  <Link href="/profile" className="text-gray-700 hover:text-blue-600 text-sm">
                     Profile
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="text-gray-700 hover:text-blue-600 text-xs sm:text-sm"
+                    className="text-gray-700 hover:text-blue-600 text-sm"
                   >
                     Logout
                   </button>
@@ -189,13 +172,58 @@ export default function Header() {
                     setAuthTab("signin");
                     setIsAuthModalOpen(true);
                   }}
-                  className="bg-blue-600 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-300 text-xs sm:text-sm"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition text-sm"
                 >
                   Sign In or Register
                 </button>
               )}
             </nav>
           </div>
+
+          {/* ✅ Animated Mobile Menu */}
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.25 }}
+                className="lg:hidden flex flex-col items-start space-y-3 mt-3 border-t border-gray-200 pt-3 bg-white"
+              >
+                {user ? (
+                  <>
+                    <Link
+                      href="/profile"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="text-gray-700 hover:text-blue-600 text-sm"
+                    >
+                      Profile
+                    </Link>
+                    <button
+                      onClick={() => {
+                        handleLogout();
+                        setIsMenuOpen(false);
+                      }}
+                      className="text-gray-700 hover:text-blue-600 text-sm"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setAuthTab("signin");
+                      setIsAuthModalOpen(true);
+                      setIsMenuOpen(false);
+                    }}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition text-sm w-full text-left"
+                  >
+                    Sign In or Register
+                  </button>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </header>
 
