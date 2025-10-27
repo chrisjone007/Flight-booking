@@ -1,4 +1,4 @@
-// components/AuthModal.tsx - WITH ORIGINAL COLORS
+// components/AuthModal.tsx - FIXED TEXT COLORS FOR MOBILE
 "use client";
 
 import { useState, useEffect } from "react";
@@ -76,35 +76,35 @@ export default function AuthModal({ isOpen, onClose, defaultTab = "signin" }: Au
   };
 
   // Step 1: Enter email
-          const handleEmailContinue = async () => {
-          if (!email) return alert("Please enter your email.");
-          
-          setLoading(true);
-          setError("");
-          try {
-            console.log('Starting user check for:', email);
-            const existsResponse = await checkUserExists(email);
-            console.log('User exists response:', existsResponse);
+  const handleEmailContinue = async () => {
+    if (!email) return alert("Please enter your email.");
+    
+    setLoading(true);
+    setError("");
+    try {
+      console.log('Starting user check for:', email);
+      const existsResponse = await checkUserExists(email);
+      console.log('User exists response:', existsResponse);
 
-            if (existsResponse.exists) {
-              setIsExistingUser(true);
-              setStep(2); // Existing user → Sign In
-              console.log('Redirecting to Sign In');
-            } else {
-              setIsExistingUser(false);
-              console.log('Sending verification code...');
-              await sendVerificationCode(email);
-              alert("OTP sent to your email! (Use any code for demo)");
-              setStep(3); // New user → Verify OTP
-              console.log('Redirecting to OTP Verification');
-            }
-          } catch (err: any) {
-            console.error('Error in handleEmailContinue:', err);
-            setError(err.message || "Something went wrong. Please try again.");
-          } finally {
-            setLoading(false);
-          }
-        };
+      if (existsResponse.exists) {
+        setIsExistingUser(true);
+        setStep(2); // Existing user → Sign In
+        console.log('Redirecting to Sign In');
+      } else {
+        setIsExistingUser(false);
+        console.log('Sending verification code...');
+        await sendVerificationCode(email);
+        alert("OTP sent to your email! (Use any code for demo)");
+        setStep(3); // New user → Verify OTP
+        console.log('Redirecting to OTP Verification');
+      }
+    } catch (err: any) {
+      console.error('Error in handleEmailContinue:', err);
+      setError(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Step 2: Sign In (existing users)
   const handleLogin = async () => {
@@ -161,7 +161,7 @@ export default function AuthModal({ isOpen, onClose, defaultTab = "signin" }: Au
   const renderBackButton = () => (
     <button
       onClick={handleBack}
-      className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4 transition duration-200"
+      className="flex items-center gap-2 text-gray-800 md:text-gray-600 hover:text-gray-900 mb-4 transition duration-200"
     >
       <ArrowLeft size={16} />
       Back
@@ -178,7 +178,7 @@ export default function AuthModal({ isOpen, onClose, defaultTab = "signin" }: Au
       >
         <button
           onClick={handleClose}
-          className="absolute right-4 top-4 text-gray-500 hover:text-gray-800 transition duration-200"
+          className="absolute right-4 top-4 text-gray-600 hover:text-gray-900 transition duration-200"
         >
           <X size={20} />
         </button>
@@ -186,7 +186,7 @@ export default function AuthModal({ isOpen, onClose, defaultTab = "signin" }: Au
         {/* Error Message */}
         {error && (
           <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-700 text-sm">{error}</p>
+            <p className="text-red-800 text-sm">{error}</p>
           </div>
         )}
 
@@ -202,7 +202,7 @@ export default function AuthModal({ isOpen, onClose, defaultTab = "signin" }: Au
               <h2 className="text-lg font-semibold mb-2 text-gray-900">
                 {defaultTab === "register" ? "Create Your Account" : "Sign in or Register"}
               </h2>
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm text-gray-800 md:text-gray-600 mb-4">
                 {defaultTab === "register" 
                   ? "Start by entering your email address" 
                   : "Manage your flight bookings easily with Ezzifly."
@@ -212,7 +212,7 @@ export default function AuthModal({ isOpen, onClose, defaultTab = "signin" }: Au
               <input
                 type="email"
                 placeholder="Enter your email address"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleEmailContinue()}
@@ -233,11 +233,11 @@ export default function AuthModal({ isOpen, onClose, defaultTab = "signin" }: Au
                       <div className="w-full border-t border-gray-300" />
                     </div>
                     <div className="relative flex justify-center text-sm">
-                      <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                      <span className="px-2 bg-white text-gray-700">Or continue with</span>
                     </div>
                   </div>
 
-                  <button className="w-full border border-gray-300 rounded-lg py-2 text-gray-700 hover:bg-gray-50 flex items-center justify-center gap-2 transition duration-200">
+                  <button className="w-full border border-gray-300 rounded-lg py-2 text-gray-800 hover:bg-gray-50 flex items-center justify-center gap-2 transition duration-200">
                     <img
                       src="/images/Google-icon.png"
                       alt="Google"
@@ -263,14 +263,14 @@ export default function AuthModal({ isOpen, onClose, defaultTab = "signin" }: Au
               <h2 className="text-lg font-semibold mb-2 text-gray-900">
                 Welcome Back
               </h2>
-              <p className="text-sm text-gray-600 mb-4">
-                Enter your password to sign in as <strong>{email}</strong>
+              <p className="text-sm text-gray-800 md:text-gray-600 mb-4">
+                Enter your password to sign in as <strong className="text-gray-900">{email}</strong>
               </p>
               
               <input
                 type="password"
                 placeholder="Password"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
@@ -286,7 +286,7 @@ export default function AuthModal({ isOpen, onClose, defaultTab = "signin" }: Au
 
               <div className="text-center">
                 <button
-                  className="text-sm text-blue-600 hover:underline transition duration-200"
+                  className="text-sm text-blue-700 hover:underline transition duration-200"
                   onClick={() => alert("Forgot password flow coming soon")}
                 >
                   Forgot password?
@@ -308,14 +308,14 @@ export default function AuthModal({ isOpen, onClose, defaultTab = "signin" }: Au
               <h2 className="text-lg font-semibold mb-2 text-gray-900">
                 Verify Your Email
               </h2>
-              <p className="text-sm text-gray-600 mb-4">
-                We sent an OTP to <strong>{email}</strong>
+              <p className="text-sm text-gray-800 md:text-gray-600 mb-4">
+                We sent an OTP to <strong className="text-gray-900">{email}</strong>
               </p>
               
               <input
                 type="text"
                 placeholder="Enter OTP from email"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleVerifyCode()}
@@ -331,7 +331,7 @@ export default function AuthModal({ isOpen, onClose, defaultTab = "signin" }: Au
 
               <div className="text-center">
                 <button
-                  className="text-sm text-blue-600 hover:underline transition duration-200"
+                  className="text-sm text-blue-700 hover:underline transition duration-200"
                   onClick={() => {
                     sendVerificationCode(email);
                     alert("OTP resent!");
@@ -356,28 +356,28 @@ export default function AuthModal({ isOpen, onClose, defaultTab = "signin" }: Au
               <h2 className="text-lg font-semibold mb-2 text-gray-900">
                 Complete Your Registration
               </h2>
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm text-gray-800 md:text-gray-600 mb-4">
                 Please fill in your details to create your account.
               </p>
 
               <input
                 type="text"
                 placeholder="First Name"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
               <input
                 type="text"
                 placeholder="Last Name"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
               <input
                 type="password"
                 placeholder="Create Password"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -393,10 +393,10 @@ export default function AuthModal({ isOpen, onClose, defaultTab = "signin" }: Au
           )}
         </AnimatePresence>
 
-        <p className="text-xs text-gray-500 mt-4 text-center">
+        <p className="text-xs text-gray-700 md:text-gray-500 mt-4 text-center">
           By signing up, you accept the Ezzifly{" "}
-          <span className="text-blue-500 cursor-pointer hover:underline">Terms of Service</span> and{" "}
-          <span className="text-blue-500 cursor-pointer hover:underline">Privacy Policy</span>.
+          <span className="text-blue-700 cursor-pointer hover:underline">Terms of Service</span> and{" "}
+          <span className="text-blue-700 cursor-pointer hover:underline">Privacy Policy</span>.
         </p>
       </motion.div>
     </div>

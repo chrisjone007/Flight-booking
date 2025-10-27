@@ -2,18 +2,18 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { registerUser } from "@/lib/api"; // ✅ Using real API
+import { registerUser } from "@/lib/api"; //
 
 const RegisterPage = () => {
   const router = useRouter();
 
   // Form state - updated to match the API expected format
   const [formData, setFormData] = useState({
-    firstName: "", // Changed from first_name
-    lastName: "",  // Changed from last_name
+    firstName: "", 
+    lastName: "", 
     email: "",
     password: "",
-    confirmPassword: "", // Changed from password_confirmation
+    confirmPassword: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -38,7 +38,7 @@ const RegisterPage = () => {
     }
 
     try {
-      // ✅ Call the real API function (registerUser)
+      //Call the real API function (registerUser)
       const result = await registerUser({
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -85,7 +85,7 @@ const RegisterPage = () => {
             </label>
             <input
               type="text"
-              name="lastName" // Changed from last_name
+              name="lastName" 
               value={formData.lastName}
               onChange={handleChange}
               required

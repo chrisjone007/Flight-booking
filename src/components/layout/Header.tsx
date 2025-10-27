@@ -328,7 +328,7 @@ export default function Header({ onAuthClick }: HeaderProps) {
             </nav>
           </div>
 
-          {/* ✅ Enhanced Mobile Menu with ALL Navigation Items */}
+          {/*Enhanced Mobile Menu with ALL Navigation Items */}
           <AnimatePresence>
             {isMenuOpen && (
               <motion.div
