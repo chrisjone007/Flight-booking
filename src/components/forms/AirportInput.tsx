@@ -49,24 +49,29 @@ export default function AirportInput({ value, onChange, placeholder, label }: Ai
           setIsOpen(true);
         }}
         onFocus={() => setIsOpen(true)}
+        onBlur={() => setTimeout(() => setIsOpen(false), 200)}
         placeholder={placeholder}
         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
       />
       
       {isOpen && inputValue && (
         <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-auto">
-          {filteredAirports.map((airport) => (
-            <div
-              key={airport.code}
-              className="p-3 hover:bg-gray-50 cursor-pointer border-b last:border-b-0"
-              onClick={() => handleSelect(airport)}
-            >
-              <div className="font-medium text-gray-900">
-                {airport.city} ({airport.code})
+          {filteredAirports.length > 0 ? (
+            filteredAirports.map((airport) => (
+              <div
+                key={airport.code}
+                className="p-3 hover:bg-gray-50 cursor-pointer border-b last:border-b-0"
+                onClick={() => handleSelect(airport)}
+              >
+                <div className="font-medium text-gray-900">
+                  {airport.city} ({airport.code})
+                </div>
+                <div className="text-sm text-gray-500">{airport.name}</div>
               </div>
-              <div className="text-sm text-gray-500">{airport.name}</div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <div className="p-3 text-gray-500">No airports found</div>
+          )}
         </div>
       )}
     </div>

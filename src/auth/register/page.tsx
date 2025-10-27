@@ -2,18 +2,18 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { mockRegister } from "@/lib/api"; // ✅ import mock API
+import { registerUser } from "@/lib/api"; // ✅ Using real API
 
 const RegisterPage = () => {
   const router = useRouter();
 
-  // Form state
+  // Form state - updated to match the API expected format
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
+    firstName: "", // Changed from first_name
+    lastName: "",  // Changed from last_name
     email: "",
     password: "",
-    password_confirmation: "",
+    confirmPassword: "", // Changed from password_confirmation
   });
 
   const [loading, setLoading] = useState(false);
@@ -30,14 +30,28 @@ const RegisterPage = () => {
     setError(null);
     setSuccess(null);
 
-    try {
-      // ✅ Call the mock API instead of fetch()
-      const data = await mockRegister(formData);
+    // Check if passwords match
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      setLoading(false);
+      return;
+    }
 
-      setSuccess(data.message);
-      setTimeout(() => router.push("/auth/login"), 2000);
+    try {
+      // ✅ Call the real API function (registerUser)
+      const result = await registerUser({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (result.success) {
+        setSuccess(result.message || "Registration successful!");
+        setTimeout(() => router.push("/auth/login"), 2000);
+      }
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || "Registration failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -57,8 +71,8 @@ const RegisterPage = () => {
             </label>
             <input
               type="text"
-              name="first_name"
-              value={formData.first_name}
+              name="firstName" // Changed from first_name
+              value={formData.firstName}
               onChange={handleChange}
               required
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
@@ -71,8 +85,8 @@ const RegisterPage = () => {
             </label>
             <input
               type="text"
-              name="last_name"
-              value={formData.last_name}
+              name="lastName" // Changed from last_name
+              value={formData.lastName}
               onChange={handleChange}
               required
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
@@ -113,8 +127,8 @@ const RegisterPage = () => {
             </label>
             <input
               type="password"
-              name="password_confirmation"
-              value={formData.password_confirmation}
+              name="confirmPassword" // Changed from password_confirmation
+              value={formData.confirmPassword}
               onChange={handleChange}
               required
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"

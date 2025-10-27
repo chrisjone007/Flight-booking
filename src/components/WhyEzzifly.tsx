@@ -50,7 +50,7 @@ const cardVariants = {
     transition: {
       delay: i * 0.2,
       duration: 0.6,
-      ease: "easeOut",
+      ease: "easeOut" as const,
     },
   }),
 };
@@ -83,7 +83,7 @@ const WhyEzzifly: React.FC = () => {
                 scale: 1.03,
                 boxShadow: "0px 8px 20px rgba(0,0,0,0.1)",
               }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
+              transition={{ duration: 0.25, ease: "easeOut" as const }}
               className="bg-white border border-gray-100 rounded-2xl p-6 cursor-pointer transition-all"
             >
               <div className="flex justify-center md:justify-start mb-4">

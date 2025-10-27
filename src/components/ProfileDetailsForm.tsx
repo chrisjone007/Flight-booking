@@ -9,19 +9,20 @@ interface ProfileDetailsFormProps {
 
 export default function ProfileDetailsForm({ user }: ProfileDetailsFormProps) {
   const [formData, setFormData] = useState({
-    title: user?.title || "",
+    // Use optional chaining with fallback empty strings
+    title: (user as any)?.title || "",
     firstName: user?.firstName || "",
-    middleName: user?.middleName || "",
+    middleName: (user as any)?.middleName || "",
     lastName: user?.lastName || "",
     email: user?.email || "",
     phone: user?.phone || "",
-    gender: user?.gender || "",
-    dob: user?.dob || "",
-    nationality: user?.nationality || "",
-    passportCountry: user?.passportCountry || "",
-    passportNumber: user?.passportNumber || "",
-    passportIssueDate: user?.passportIssueDate || "",
-    passportExpiryDate: user?.passportExpiryDate || "",
+    gender: (user as any)?.gender || "",
+    dob: (user as any)?.dob || user?.dateOfBirth || "", // Map dateOfBirth to dob
+    nationality: (user as any)?.nationality || "",
+    passportCountry: (user as any)?.passportCountry || "",
+    passportNumber: (user as any)?.passportNumber || "",
+    passportIssueDate: (user as any)?.passportIssueDate || "",
+    passportExpiryDate: (user as any)?.passportExpiryDate || "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -39,75 +40,156 @@ export default function ProfileDetailsForm({ user }: ProfileDetailsFormProps) {
     <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-5">
       <div>
         <label className="block text-sm text-gray-600">Title</label>
-        <input name="title" value={formData.title} onChange={handleChange} className="w-full border rounded-lg p-2.5 mt-1" />
+        <select 
+          name="title" 
+          value={formData.title} 
+          onChange={handleChange} 
+          className="w-full border rounded-lg p-2.5 mt-1"
+        >
+          <option value="">Select Title</option>
+          <option value="Mr">Mr</option>
+          <option value="Mrs">Mrs</option>
+          <option value="Miss">Miss</option>
+          <option value="Ms">Ms</option>
+          <option value="Dr">Dr</option>
+        </select>
       </div>
 
       <div>
         <label className="block text-sm text-gray-600">Last Name</label>
-        <input name="lastName" value={formData.lastName} onChange={handleChange} className="w-full border rounded-lg p-2.5 mt-1" />
+        <input 
+          name="lastName" 
+          value={formData.lastName} 
+          onChange={handleChange} 
+          className="w-full border rounded-lg p-2.5 mt-1" 
+        />
       </div>
 
       <div>
         <label className="block text-sm text-gray-600">First Name</label>
-        <input name="firstName" value={formData.firstName} onChange={handleChange} className="w-full border rounded-lg p-2.5 mt-1" />
+        <input 
+          name="firstName" 
+          value={formData.firstName} 
+          onChange={handleChange} 
+          className="w-full border rounded-lg p-2.5 mt-1" 
+        />
       </div>
 
       <div>
         <label className="block text-sm text-gray-600">Middle Name</label>
-        <input name="middleName" value={formData.middleName} onChange={handleChange} className="w-full border rounded-lg p-2.5 mt-1" />
+        <input 
+          name="middleName" 
+          value={formData.middleName} 
+          onChange={handleChange} 
+          className="w-full border rounded-lg p-2.5 mt-1" 
+        />
       </div>
 
       <div>
         <label className="block text-sm text-gray-600">Email Address</label>
-        <input type="email" name="email" value={formData.email} disabled className="w-full border rounded-lg p-2.5 mt-1 bg-gray-100" />
+        <input 
+          type="email" 
+          name="email" 
+          value={formData.email} 
+          disabled 
+          className="w-full border rounded-lg p-2.5 mt-1 bg-gray-100" 
+        />
       </div>
 
       <div>
         <label className="block text-sm text-gray-600">Phone Number</label>
-        <input name="phone" value={formData.phone} onChange={handleChange} className="w-full border rounded-lg p-2.5 mt-1" />
+        <input 
+          name="phone" 
+          value={formData.phone} 
+          onChange={handleChange} 
+          className="w-full border rounded-lg p-2.5 mt-1" 
+        />
       </div>
 
       <div>
         <label className="block text-sm text-gray-600">Gender</label>
-        <select name="gender" value={formData.gender} onChange={handleChange} className="w-full border rounded-lg p-2.5 mt-1">
+        <select 
+          name="gender" 
+          value={formData.gender} 
+          onChange={handleChange} 
+          className="w-full border rounded-lg p-2.5 mt-1"
+        >
           <option value="">Select</option>
-          <option>Male</option>
-          <option>Female</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+          <option value="Prefer not to say">Prefer not to say</option>
         </select>
       </div>
 
       <div>
         <label className="block text-sm text-gray-600">Date of Birth</label>
-        <input type="date" name="dob" value={formData.dob} onChange={handleChange} className="w-full border rounded-lg p-2.5 mt-1" />
+        <input 
+          type="date" 
+          name="dob" 
+          value={formData.dob} 
+          onChange={handleChange} 
+          className="w-full border rounded-lg p-2.5 mt-1" 
+        />
       </div>
 
       <div>
         <label className="block text-sm text-gray-600">Nationality</label>
-        <input name="nationality" value={formData.nationality} onChange={handleChange} className="w-full border rounded-lg p-2.5 mt-1" />
+        <input 
+          name="nationality" 
+          value={formData.nationality} 
+          onChange={handleChange} 
+          className="w-full border rounded-lg p-2.5 mt-1" 
+        />
       </div>
 
       <div>
         <label className="block text-sm text-gray-600">Passport Issuing Country</label>
-        <input name="passportCountry" value={formData.passportCountry} onChange={handleChange} className="w-full border rounded-lg p-2.5 mt-1" />
+        <input 
+          name="passportCountry" 
+          value={formData.passportCountry} 
+          onChange={handleChange} 
+          className="w-full border rounded-lg p-2.5 mt-1" 
+        />
       </div>
 
       <div>
         <label className="block text-sm text-gray-600">Passport Number</label>
-        <input name="passportNumber" value={formData.passportNumber} onChange={handleChange} className="w-full border rounded-lg p-2.5 mt-1" />
+        <input 
+          name="passportNumber" 
+          value={formData.passportNumber} 
+          onChange={handleChange} 
+          className="w-full border rounded-lg p-2.5 mt-1" 
+        />
       </div>
 
       <div>
         <label className="block text-sm text-gray-600">Passport Issue Date</label>
-        <input type="date" name="passportIssueDate" value={formData.passportIssueDate} onChange={handleChange} className="w-full border rounded-lg p-2.5 mt-1" />
+        <input 
+          type="date" 
+          name="passportIssueDate" 
+          value={formData.passportIssueDate} 
+          onChange={handleChange} 
+          className="w-full border rounded-lg p-2.5 mt-1" 
+        />
       </div>
 
       <div>
         <label className="block text-sm text-gray-600">Passport Expiry Date</label>
-        <input type="date" name="passportExpiryDate" value={formData.passportExpiryDate} onChange={handleChange} className="w-full border rounded-lg p-2.5 mt-1" />
+        <input 
+          type="date" 
+          name="passportExpiryDate" 
+          value={formData.passportExpiryDate} 
+          onChange={handleChange} 
+          className="w-full border rounded-lg p-2.5 mt-1" 
+        />
       </div>
 
       <div className="md:col-span-2 flex justify-center mt-6">
-        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition">
+        <button 
+          type="submit" 
+          className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition"
+        >
           Update Changes
         </button>
       </div>

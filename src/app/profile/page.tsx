@@ -64,11 +64,11 @@ export default function ProfilePage() {
           </span>
           <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300">
             <Image
-              src={user?.avatar || "/images/avatar.png"}
-              alt="User Avatar"
-              fill
-              className="object-cover"
-            />
+                src={(user as any)?.avatar || "/images/avatar.png"}
+                alt="User Avatar"
+                fill
+                className="object-cover"
+                />
           </div>
         </div>
       </div>

@@ -9,7 +9,12 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import AuthModal from "@/components/AuthModal";
 
-export default function Header() {
+// Make onAuthClick optional to fix the build error
+interface HeaderProps {
+  onAuthClick?: (tab?: "signin" | "register") => void;
+}
+
+export default function Header({ onAuthClick }: HeaderProps) {
   const { user, logout, isAuthenticated } = useAuth();
   const router = useRouter();
 
@@ -22,6 +27,16 @@ export default function Header() {
 
   const currencyRef = useRef<HTMLDivElement>(null);
   const languageRef = useRef<HTMLDivElement>(null);
+
+  // Handle auth click - use prop if provided, otherwise use internal state
+  const handleAuthClick = (tab?: "signin" | "register") => {
+    if (onAuthClick) {
+      onAuthClick(tab);
+    } else {
+      setAuthTab(tab || "signin");
+      setIsAuthModalOpen(true);
+    }
+  };
 
   // Handle scroll effect for header background
   useEffect(() => {
@@ -61,14 +76,17 @@ export default function Header() {
     router.push("/");
   };
 
-  // Animation variants
+  // Fixed animation variants with proper TypeScript types
   const headerVariants = {
-    initial: { y: -100, opacity: 0 },
+    initial: { 
+      y: -100, 
+      opacity: 0 
+    },
     animate: { 
       y: 0, 
       opacity: 1,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 300,
         damping: 30
       }
@@ -79,7 +97,7 @@ export default function Header() {
       boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
       transition: {
         duration: 0.3,
-        ease: "easeOut"
+        ease: "easeOut" as const
       }
     }
   };
@@ -91,7 +109,7 @@ export default function Header() {
       scale: 0.95,
       transition: {
         duration: 0.15,
-        ease: "easeIn"
+        ease: "easeIn" as const
       }
     },
     open: {
@@ -99,7 +117,7 @@ export default function Header() {
       y: 0,
       scale: 1,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 400,
         damping: 25
       }
@@ -112,14 +130,14 @@ export default function Header() {
       y: -20,
       transition: {
         duration: 0.2,
-        ease: "easeIn"
+        ease: "easeIn" as const
       }
     },
     open: {
       opacity: 1,
       y: 0,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 400,
         damping: 30
       }
@@ -133,7 +151,7 @@ export default function Header() {
       opacity: 1,
       transition: {
         delay: i * 0.1,
-        type: "spring",
+        type: "spring" as const,
         stiffness: 400
       }
     })
@@ -145,7 +163,7 @@ export default function Header() {
         className="fixed top-0 left-0 right-0 bg-white shadow-sm border-b w-full z-[9999]"
         variants={headerVariants}
         initial="initial"
-        animate={["animate", isScrolled ? "scrolled" : ""]}
+        animate={isScrolled ? ["animate", "scrolled"] : "animate"}
       >
         <div className="w-full px-4 lg:px-6">
           <div className="flex justify-between items-center h-14 sm:h-16">
@@ -296,10 +314,7 @@ export default function Header() {
                 </div>
               ) : (
                 <motion.button
-                  onClick={() => {
-                    setAuthTab("signin");
-                    setIsAuthModalOpen(true);
-                  }}
+                  onClick={() => handleAuthClick("signin")}
                   className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition text-sm"
                   whileHover={{ 
                     scale: 1.05,
@@ -433,11 +448,7 @@ export default function Header() {
                       </div>
                     ) : (
                       <motion.button
-                        onClick={() => {
-                          setAuthTab("signin");
-                          setIsAuthModalOpen(true);
-                          setIsMenuOpen(false);
-                        }}
+                        onClick={() => handleAuthClick("signin")}
                         className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-blue-700 transition text-sm text-center"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}

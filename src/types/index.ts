@@ -6,6 +6,18 @@ export interface User {
   lastName: string;
 }
 
+// Flight search parameters (for search forms)
+export interface FlightSearchParams {
+  from: string;
+  to: string;
+  departureDate: Date | null;
+  returnDate: Date | null;
+  travelers: number;
+  tripType: 'one-way' | 'round-trip' | 'multi-city';
+  cabinClass: string;
+}
+
+// Flight data (actual flight information)
 export interface Flight {
   id: string;
   airline: string;
@@ -32,4 +44,35 @@ export interface Passenger {
   dateOfBirth: string;
   gender: string;
   passportNumber?: string;
+}
+
+// Add interface for multi-city legs if needed
+export interface MultiCityLeg {
+  from: string;
+  to: string;
+  departDate: Date | null;
+}
+export interface User {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  avatar?: string;
+  phone?: string;
+  dateOfBirth?: string;
+  title?: string;
+  middleName?: string;
+  gender?: string;
+  dob?: string;
+  nationality?: string;
+  passportCountry?: string;
+  passportNumber?: string;
+  passportIssueDate?: string;
+  passportExpiryDate?: string;
+}
+export interface Airport {
+  code: string;
+  name: string;
+  city: string;
+  country: string;
 }

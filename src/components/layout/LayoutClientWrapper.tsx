@@ -4,41 +4,34 @@ import { useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import AuthModal from "@/components/AuthModal";
-import WhyEzzifly from "@/components/WhyEzzifly";
-import AboutFly from "@/components/AboutFly";
 
-export default function LayoutClientWrapper({ children }: { children: React.ReactNode }) {
-  const [isAuthOpen, setIsAuthOpen] = useState(false);
+export default function LayoutClientWrapper({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authTab, setAuthTab] = useState<"signin" | "register">("signin");
 
-  // open modal and choose tab
   const openAuthModal = (tab?: "signin" | "register") => {
     setAuthTab(tab || "signin");
-    setIsAuthOpen(true);
-  };
-
-  // close modal
-  const closeAuthModal = () => {
-    setIsAuthOpen(false);
+    setIsAuthModalOpen(true);
   };
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header receives modal trigger function */}
       <Header onAuthClick={openAuthModal} />
-
-      <main className="flex-grow w-full">
+      
+      <main className="flex-1">
         {children}
-        <WhyEzzifly />
-        <AboutFly />
       </main>
 
       <Footer onAuthClick={openAuthModal} />
 
       {/* Auth Modal rendered globally */}
       <AuthModal
-        isOpen={isAuthOpen}
-        onClose={closeAuthModal}
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
         defaultTab={authTab}
       />
     </div>
