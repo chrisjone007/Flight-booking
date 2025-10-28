@@ -25,8 +25,26 @@ export default function Header({ onAuthClick }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
+  // Add state for selected currency and language
+  const [selectedCurrency, setSelectedCurrency] = useState("NGN");
+  const [selectedLanguage, setSelectedLanguage] = useState("EN");
+
   const currencyRef = useRef<HTMLDivElement>(null);
   const languageRef = useRef<HTMLDivElement>(null);
+
+  // Currency options
+  const currencies = [
+    { code: "NGN", name: "Nigerian Naira" },
+    { code: "USD", name: "US Dollar" },
+    { code: "EUR", name: "Euro" },
+  ];
+
+  // Language options
+  const languages = [
+    { code: "EN", name: "English" },
+    { code: "FR", name: "French" },
+    { code: "ES", name: "Spanish" },
+  ];
 
   // Handle auth click - use prop if provided, otherwise use internal state
   const handleAuthClick = (tab?: "signin" | "register") => {
@@ -74,6 +92,36 @@ export default function Header({ onAuthClick }: HeaderProps) {
   const handleLogout = () => {
     logout();
     router.push("/");
+  };
+
+  // Handle currency selection
+  const handleCurrencySelect = (currencyCode: string) => {
+    setSelectedCurrency(currencyCode);
+    setShowCurrencyDropdown(false);
+    // You can add additional logic here like updating context/API
+    console.log("Currency changed to:", currencyCode);
+  };
+
+  // Handle language selection
+  const handleLanguageSelect = (languageCode: string) => {
+    setSelectedLanguage(languageCode);
+    setShowLanguageDropdown(false);
+    // You can add additional logic here like updating context/API
+    console.log("Language changed to:", languageCode);
+  };
+
+  // Handle mobile currency selection
+  const handleMobileCurrencySelect = (currency: string) => {
+    const currencyCode = currency.split(" - ")[0]; // Extract "NGN" from "NGN - Nigerian Naira"
+    setSelectedCurrency(currencyCode);
+    setIsMenuOpen(false);
+  };
+
+  // Handle mobile language selection
+  const handleMobileLanguageSelect = (language: string) => {
+    const languageCode = language.split(" ")[1].replace(/[()]/g, ""); // Extract "EN" from "English (EN)"
+    setSelectedLanguage(languageCode);
+    setIsMenuOpen(false);
   };
 
   // Fixed animation variants with proper TypeScript types
@@ -207,7 +255,7 @@ export default function Header({ onAuthClick }: HeaderProps) {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <span className="text-sm font-medium">EN</span>
+                  <span className="text-sm font-medium">{selectedLanguage}</span>
                   <motion.svg
                     className="w-4 h-4"
                     fill="none"
@@ -230,15 +278,19 @@ export default function Header({ onAuthClick }: HeaderProps) {
                       className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-50"
                     >
                       <div className="py-1">
-                        {["English (EN)", "French (FR)", "Spanish (ES)"].map((lang) => (
+                        {languages.map((language) => (
                           <motion.button
-                            key={lang}
-                            onClick={() => setShowLanguageDropdown(false)}
-                            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            key={language.code}
+                            onClick={() => handleLanguageSelect(language.code)}
+                            className={`block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 ${
+                              selectedLanguage === language.code 
+                                ? "text-blue-600 bg-blue-50" 
+                                : "text-gray-700"
+                            }`}
                             whileHover={{ x: 4 }}
                             transition={{ type: "spring", stiffness: 400 }}
                           >
-                            {lang}
+                            {language.name} ({language.code})
                           </motion.button>
                         ))}
                       </div>
@@ -255,7 +307,7 @@ export default function Header({ onAuthClick }: HeaderProps) {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <span className="text-sm font-medium">NGN</span>
+                  <span className="text-sm font-medium">{selectedCurrency}</span>
                   <motion.svg
                     className="w-4 h-4"
                     fill="none"
@@ -278,15 +330,19 @@ export default function Header({ onAuthClick }: HeaderProps) {
                       className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-50"
                     >
                       <div className="py-1">
-                        {["NGN", "USD", "EUR"].map((cur) => (
+                        {currencies.map((currency) => (
                           <motion.button
-                            key={cur}
-                            onClick={() => setShowCurrencyDropdown(false)}
-                            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            key={currency.code}
+                            onClick={() => handleCurrencySelect(currency.code)}
+                            className={`block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 ${
+                              selectedCurrency === currency.code 
+                                ? "text-blue-600 bg-blue-50" 
+                                : "text-gray-700"
+                            }`}
                             whileHover={{ x: 4 }}
                             transition={{ type: "spring", stiffness: 400 }}
                           >
-                            {cur}
+                            {currency.code} - {currency.name}
                           </motion.button>
                         ))}
                       </div>
@@ -328,7 +384,7 @@ export default function Header({ onAuthClick }: HeaderProps) {
             </nav>
           </div>
 
-          {/*Enhanced Mobile Menu with ALL Navigation Items */}
+          {/* Enhanced Mobile Menu with ALL Navigation Items */}
           <AnimatePresence>
             {isMenuOpen && (
               <motion.div
@@ -368,8 +424,12 @@ export default function Header({ onAuthClick }: HeaderProps) {
                       {["English (EN)", "French (FR)", "Spanish (ES)"].map((lang, index) => (
                         <motion.button
                           key={lang}
-                          onClick={() => setIsMenuOpen(false)}
-                          className="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition"
+                          onClick={() => handleMobileLanguageSelect(lang)}
+                          className={`block w-full text-left px-3 py-2 text-sm hover:bg-gray-100 rounded-lg transition ${
+                            selectedLanguage === lang.split(" ")[1].replace(/[()]/g, "") 
+                              ? "text-blue-600 bg-blue-50" 
+                              : "text-gray-700"
+                          }`}
                           whileHover={{ x: 4 }}
                           transition={{ type: "spring", stiffness: 400 }}
                         >
@@ -392,8 +452,12 @@ export default function Header({ onAuthClick }: HeaderProps) {
                       {["NGN - Nigerian Naira", "USD - US Dollar", "EUR - Euro"].map((currency, index) => (
                         <motion.button
                           key={currency}
-                          onClick={() => setIsMenuOpen(false)}
-                          className="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition"
+                          onClick={() => handleMobileCurrencySelect(currency)}
+                          className={`block w-full text-left px-3 py-2 text-sm hover:bg-gray-100 rounded-lg transition ${
+                            selectedCurrency === currency.split(" - ")[0]
+                              ? "text-blue-600 bg-blue-50" 
+                              : "text-gray-700"
+                          }`}
                           whileHover={{ x: 4 }}
                           transition={{ type: "spring", stiffness: 400 }}
                         >
