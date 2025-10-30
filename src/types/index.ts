@@ -76,3 +76,21 @@ export interface Airport {
   city: string;
   country: string;
 }
+
+export interface Traveller {
+  id: string;
+  title?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  countryCode?: string;
+  dob: string;
+  gender?: string;
+  passportCountry?: string;
+  passportNumber?: string;
+  passportIssue?: string;
+  passportExpiry?: string;
+  nationality?: string;
+}
+
