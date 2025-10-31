@@ -12,9 +12,21 @@ const dateInputClasses =
   "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none";
 
 const emptyFormData: Traveller = {
-    id: '', title: '', firstName: '', lastName: '', email: '', phone: '', countryCode: '',
-    dob: '', gender: '', passportCountry: '', passportNumber: '', passportIssue: '',
-    passportExpiry: '', nationality: ''
+    id: '', 
+    title: '', 
+    firstName: '', 
+    lastName: '', 
+    middleName: '', 
+    email: '', 
+    phone: '', 
+    countryCode: '',
+    dob: '', 
+    gender: '', 
+    passportCountry: '', 
+    passportNumber: '', 
+    passportIssue: '',
+    passportExpiry: '', 
+    nationality: ''
 };
 
 export default function SavedTravelers() {
