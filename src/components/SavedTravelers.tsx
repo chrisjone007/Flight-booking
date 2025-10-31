@@ -114,7 +114,7 @@ export default function SavedTravelers() {
             <div>
               <h2 className="text-xl font-bold text-gray-800 mb-1">Saved Travellers</h2>
               <div className="text-sm text-gray-500">
-                Add travellers to speed up your booking process.
+                Add frequent travellers to make booking for others easy.
               </div>
             </div>
             
@@ -138,10 +138,10 @@ export default function SavedTravelers() {
               </p>
                <button
                 type="button"
-                className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition duration-150 ease-in-out"
-                onClick={prepareToAddTraveller} // <-- USING THE FIXED HANDLER
+                className="px-6 py-3 text-blue-600 border-solid border-2 border-blue-700 font-medium rounded-lg hover:bg-blue-700 hover:text-white transition duration-150 ease-in-out"
+                onClick={prepareToAddTraveller}
               >
-                + Add Traveller
+                + Add Travellers
               </button>
             </div>
           ) : (
@@ -195,9 +195,6 @@ export default function SavedTravelers() {
         </>
       )}
 
-      {/* ---------------------------------------------------- */}
-      {/* 3. Add/Edit Form View (Middle Image) */}
-      {/* ---------------------------------------------------- */}
       {showForm && (
         <form onSubmit={handleSave} className="space-y-6 mt-4">
           <h3 className="text-lg font-semibold mb-6">{editingId ? 'Edit Traveller' : 'Add New Traveller'}</h3>

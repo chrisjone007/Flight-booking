@@ -82,6 +82,7 @@ export interface Traveller {
   title?: string;
   firstName: string;
   lastName: string;
+  middleName: string;
   email: string;
   phone?: string;
   countryCode?: string;
